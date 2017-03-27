@@ -1,0 +1,1 @@
+<a href="/view-train-schedule">View Train Schedule</a>
