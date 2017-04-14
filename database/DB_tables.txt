@@ -1,0 +1,103 @@
+create table person(
+	person_id int(6) AUTO_INCREMENT,
+	nic varchar(20) not null,
+	title varchar(10) not null,
+	first_name varchar(30) not null,
+	last_name varchar(30) not null,
+	street_no varchar(5) not null,
+	street_name varchar(30) not null,
+	city varchar(30) not null,
+	province varchar(30) not null,
+	postal_code varchar(10) not null,
+	email varchar(30) not null,
+	constraint primary key(person_id)
+);
+
+create table phone(
+	person_id int(6),
+	phone_type varchar(20) not null,
+	phone_no varchar(20) not null,
+	constraint primary key(person_id,phone_no),
+	constraint foreign key(person_id) references person(person_id) on update cascade on delete cascade
+);
+
+create table employee(
+	person_id int(6),
+	employee_id  char(6) not null,
+	user_name varchar(30) not null,
+	designation varchar(30) not null,
+	password varchar(40) not null,
+	constraint primary key(person_id),
+	constraint foreign key(person_id) references person(person_id) on delete cascade
+);
+
+create table customer(
+	person_id int(6),
+	country varchar(30) not null,
+	constraint primary key(person_id),
+	constraint foreign key(person_id) references person(person_id) on delete cascade
+);
+
+create table station(
+	station_code char(3),
+	name varchar(30) not null,
+	type varchar(30) not null,
+	line_no int(3) not null,
+	district varchar(30) not null,
+	province varchar(30) not null,
+	constraint primary key(station_code)
+);
+
+create table train(
+	train_no int(4),
+	name varchar(30) not null,
+	type varchar(30) not null,
+	source_station varchar(30) not null,
+	departure_time time not null,
+	destination_station varcahr(30) not null,
+	arrival_time time not null,
+	classes varchar(20),
+	availability varchar(30) not null,
+	constraint primary key(train_no)
+);
+
+create table line(
+	line_no int(3) AUTO_INCREMENT,
+	name varchar(30) not null,
+	distance decimal(10,3) not null,
+	constraint primary key(line_no)
+);
+
+create table train_station(
+	train_no int(4),
+	station_code char(3),
+	constraint primary key(train_no,station_code)
+);
+
+create table train_line(
+	train_no int(4),
+	line_no int(3),
+	constraint primary key(train_no,line_no)
+);
+
+create table seat(
+	train_no int(4),
+	available_class varchar(5),
+	no_of_seat int(3) not null,
+	constraint primary key(train_no,available_class),
+	constraint  foreign key(train_no) references train(train_no) on delete cascade
+);
+
+create table reservation(
+	reservation_no int(6) AUTO_INCREMENT,
+	customer_id int(6) not null,
+	train_no int(4) not null,
+	reserve_from varchar(30) not null,
+	reserve_to varchar(30) not null,
+	reserve_date date not null,
+	class varchar(5) not null,
+	no_of_seat int(3) not null,
+	constraint primary key(reservation_no),
+	constraint foreign key(customer_id) references customer(person_id),
+	constraint foreign key(train_no) references train(train_no)
+);
