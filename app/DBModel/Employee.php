@@ -57,7 +57,7 @@ class Employee extends Person
         return false;
     }
 
-    public function get($person_id)
+    public static function get($person_id)
     {
         $employee = new Employee();
         $employee = parent::getPerson($person_id, $employee);
@@ -65,7 +65,7 @@ class Employee extends Person
             $db = DBConnector::getDatabase();
             if (isset($db)) {
                 $stm = $db->prepare("SELECT * FROM employee WHERE person_id=?");
-                $stm->bind_param("i", $this->person_id);
+                $stm->bind_param("i", $person_id);
                 if ($stm->execute()) {
                     $result = $stm->get_result()->fetch_assoc();
                     if (isset($result)) {
@@ -91,5 +91,31 @@ class Employee extends Person
         } else {
             return false;
         }
+    }
+
+    public static function changePassword($person_id, $old_password, $new_password)
+    {
+        $db = DBConnector::getDatabase();
+        if (isset($db)) {
+            mysqli_begin_transaction($db);
+
+            $stmt = $db->prepare("SELECT password from employee WHERE person_id=?");
+            $stmt->bind_param("i", $person_id);
+            $stmt->execute();
+
+            $current_password = $stmt->get_result()->fetch_assoc();
+            if (password_verify($old_password, $current_password['password'])) {
+                $new_password = bcrypt($new_password);
+                $stmt = $db->prepare("UPDATE person SET password=? WHERE id=?");
+                $stmt->bind_param("si", $new_password, $person_id);
+                $executed = $stmt->execute();
+
+                mysqli_commit($db);
+                return $executed;
+            }
+            mysqli_commit($db);
+
+        }
+        return false;
     }
 }

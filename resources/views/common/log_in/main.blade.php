@@ -17,7 +17,7 @@
                 <input class="form-control" id="password" name="password" type="password">
             </div>
             <div class="form-group">
-                <button class="btn btn-default" id="submit" type="submit" name="action">Sign In
+                <button class="btn btn-primary" id="submit" type="submit" name="action">Sign In
                 </button>
             </div>
         </form>

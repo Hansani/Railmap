@@ -16,8 +16,8 @@
                 <input type="password" class="form-control" id="new_password" name="new_password">
             </div>
             <div class="form-group">
-                <label class="control-label" for="re-enter_password">Re-enter Password</label>
-                <input type="password" class="form-control" id="re-enter_password" name="re-enter_password">
+                <label class="control-label" for="re_enter_password">Re-enter Password</label>
+                <input type="password" class="form-control" id="re_enter_password" name="re_enter_password">
             </div>
             <div class="row">
                 <div class="col-sm-6">

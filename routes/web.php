@@ -15,18 +15,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+//common
 Route::get('/log-in', function () {
     return view('common.log_in.main');
 });
 
-//common
+Route::post('/login', 'AuthController@login');
+Route::get('logout', 'AuthController@logout');
+
 Route::get('/change-password', function () {
     return view('common.change_password.main');
 });
 
-Route::get('/profile', function () {
-    return view('common.profile.main');
-});
+Route::get('/profile', 'AuthController@viewProfile');
 
 //administrator
 Route::get('/administrator', function () {
