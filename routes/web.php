@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/log-in', function () {
+    return view('common.log_in.main');
+});
+
 //common
 Route::get('/change-password', function () {
     return view('common.change_password.main');
