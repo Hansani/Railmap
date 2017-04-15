@@ -13,19 +13,19 @@
             </div>
             <div class="form-group">
                 <label class="control-label" for="employee_id">Employee ID </label>
-                <input type="text" class="form-control" id="employee_id" name="employee_id" readonly>
+                <input type="text" class="form-control" id="employee_id" name="employee_id" required>
             </div>
             <div class="form-group">
                 <label class="control-label" for="nic">NIC</label>
-                <input type="text" class="form-control" id="nic" name="nic" readonly>
+                <input type="text" class="form-control" id="nic" name="nic" required>
             </div>
             <div class="form-group">
                 <label class="control-label" for="title">Title</label>
-                <input type="text" class="form-control" id="title" name="title" placeholder="Mr./Mrs./Miss." readonly>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Mr./Mrs./Miss." required>
             </div>
             <div class="form-group">
                 <label class="control-label" for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" readonly>
+                <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="form-group">
                 <label class="control-label" for="Address">Address</label>
@@ -41,7 +41,9 @@
             </div>
             <div class="form-group">
                 <label class="control-label" for="phone_no">Phone NO</label>
-                <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="emergency">
+                <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="home">
+                <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="mobile" required>
+                <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="emergency" required>
             </div>
             <div class="form-group">
                 <label class="control-label" for="user_name">User Name</label>
@@ -49,7 +51,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label" for="designation">Designation</label>
-                <input type="text" class="form-control" id="designation" name="designation">
+                <input type="text" class="form-control" id="designation" name="designation" required>
             </div>
             <div class="form-group">
                 <label class="control-label" for="password">Password</label>
