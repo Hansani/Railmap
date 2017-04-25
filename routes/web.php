@@ -35,9 +35,8 @@ Route::get('/administrator', function () {
     return view('administrator.main');
 });
 
-Route::get('/employee-manager', function () {
-    return view('administrator.employee_manager.main');
-});
+Route::get('/employee-manager', 'EmployeeController@UpdateEmployee');
+Route::post('submit-employee-manager' , 'EmployeeController@addEmployee');
 
 Route::get('/view-employee', function () {
     return view('/administrator.view_employee.main');
@@ -83,3 +82,6 @@ Route::get('/view-reservation', function () {
 Route::get('/line-details', function () {
     return view('employee.line_details.main');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

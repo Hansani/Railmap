@@ -13,7 +13,7 @@ use App\DBConnection\DBConnector;
 class Employee extends Person
 {
     public $employee_id;
-    public $use_name;
+    public $user_name;
     public $designation;
     public $password;
 
@@ -26,14 +26,14 @@ class Employee extends Person
                 $person_id = parent::insert();
                 if (isset($person_id)) {
                     $stm = $db->prepare("INSERT INTO employee (person_id,employee_id,user_name,designation,password) VALUES (?,?,?,?,?) ");
-                    $stm->bind_param("issss", $this->person_id, $this->employee_id, $this->use_name, $this->designation, $this->password);
+                    $stm->bind_param("issss", $this->person_id, $this->employee_id, $this->user_name, $this->designation, $this->password);
                     $executed = $stm->execute();
                     mysqli_commit($db);
                     return $executed;
                 }
             } else {
                 $stm = $db->prepare("INSERT INTO employee (person_id,employee_id,user_name,designation,password) VALUES (?,?,?,?,?) ");
-                $stm->bind_param("issss", $this->person_id, $this->employee_id, $this->use_name, $this->designation, $this->password);
+                $stm->bind_param("issss", $this->person_id, $this->employee_id, $this->user_name, $this->designation, $this->password);
                 $executed = $stm->execute();
                 return $executed;
             }
@@ -48,7 +48,7 @@ class Employee extends Person
             mysqli_begin_transaction($db);
             if (parent::update()) {
                 $stm = $db->prepare("UPDATE employee SET employee_id=?, user_name=?, designation=? WHERE person_id=?");
-                $stm->bind_param("sssi", $this->employee_id, $this->use_name, $this->designation, $this->person_id);
+                $stm->bind_param("sssi", $this->employee_id, $this->user_name, $this->designation, $this->person_id);
                 $executed = $stm->execute();
                 mysqli_commit($db);
                 return $executed;
@@ -115,6 +115,28 @@ class Employee extends Person
             }
             mysqli_commit($db);
 
+        }
+        return false;
+    }
+
+    public static function getAllEmployee(){
+        $db = DBConnector::getDatabase();
+        if (isset($db)) {
+            $sql = "SELECT * FROM employee";
+            
+            $result = $db->query($sql);
+
+            if (isset($result)) {
+
+                $employees = array();
+                while ($row = $result->fetch_assoc()) {
+                    $employee = new Employee();
+                    $employee->person_id = $row['person_id'];
+                    $employee=Person::getPerson($employee->person_id,$employee);
+                    $employees[] = $employee;
+                }
+                return $employees;
+            }
         }
         return false;
     }

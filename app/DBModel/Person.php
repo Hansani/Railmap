@@ -65,44 +65,6 @@ abstract class Person
         }
     }
 
-    public static function getPerson($person_id, $person)
-    {
-        $db = DBConnector::getDatabase();
-        if (isset($db)) {
-            $stm = $db->prepare("SELECT nic, title, first_name, last_name, street_no, street_name, city, province, postal_code, email FROM person WHERE person_id=?");
-            $stm->bind_param('i', $person_id);
-            if ($stm->execute()) {
-                $result = $stm->get_result()->fetch_assoc();
-                if (isset($result)) {
-                    $person->nic = $result['nic'];
-                    $person->title = $result['title'];
-                    $person->first_name = $result['first_name'];
-                    $person->last_name = $result['last_name'];
-                    $person->street_no = $result['street_no'];
-                    $person->street_name = $result['street_name)'];
-                    $person->city = $result['city'];
-                    $person->province = $result['province'];
-                    $person->postal_oode = $result['postal_code'];
-                    $person->email = $result['email'];
-
-                    $phones = Phone::get($person_id);
-                    foreach ($phones as $phone) {
-                        if ($phone->phone_type == 'home') {
-                            $person->home_no = $phone->phone_no;
-                        }
-                        if ($phone->phone_type == 'mobile') {
-                            $person->home_no = $phone->phone_no;
-                        }
-                        if ($phone->phone_type == 'emergency') {
-                            $person->home_no = $phone->phone_no;
-                        }
-                    }
-                    return $person;
-                }
-            }
-        }
-    }
-
     public function update()
     {
         $db = DBConnector::getDatabase();
@@ -146,6 +108,45 @@ abstract class Person
         }
         return false;
     }
+
+    public static function getPerson($person_id, $person)
+    {
+        $db = DBConnector::getDatabase();
+        if (isset($db)) {
+            $stm = $db->prepare("SELECT nic, title, first_name, last_name, street_no, street_name, city, province, postal_code, email FROM person WHERE person_id=?");
+            $stm->bind_param('i', $person_id);
+            if ($stm->execute()) {
+                $result = $stm->get_result()->fetch_assoc();
+                if (isset($result)) {
+                    $person->nic = $result['nic'];
+                    $person->title = $result['title'];
+                    $person->first_name = $result['first_name'];
+                    $person->last_name = $result['last_name'];
+                    $person->street_no = $result['street_no'];
+                    $person->street_name = $result['street_name'];
+                    $person->city = $result['city'];
+                    $person->province = $result['province'];
+                    $person->postal_oode = $result['postal_code'];
+                    $person->email = $result['email'];
+
+                    $phones = Phone::get($person_id);
+                    foreach ($phones as $phone) {
+                        if ($phone->phone_type == 'home') {
+                            $person->home_no = $phone->phone_no;
+                        }
+                        if ($phone->phone_type == 'mobile') {
+                            $person->home_no = $phone->phone_no;
+                        }
+                        if ($phone->phone_type == 'emergency') {
+                            $person->home_no = $phone->phone_no;
+                        }
+                    }
+                    return $person;
+                }
+            }
+        }
+    }
+
 
     public function remove($person_id)
     {

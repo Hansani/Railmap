@@ -5,11 +5,15 @@
 @endsection
 
 @section('body_content')
-    <form role="form" method="get" action="{{url('/employee-manager')}}">
+    <form role="form" method="post" action="{{url('/submit-employee-manager')}}">
         <div class="col-sm-12">
             <div class="form-group">
-                <label class="control-label" for="person_id">Person ID</label>
-                <input type="text" class="form-control" id="person_id" name="person_id" placeholder="when update only">
+                <label class="control-label" for="person_id">Person ID (Only when Update)</label>
+                <select name="person_id" style="width: 100%" id="person_id">
+                    @foreach($employees as $employee)
+                        <option value="{{$employee->person_id}}">{{$employee->person_id}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label class="control-label" for="employee_id">Employee ID </label>
@@ -24,8 +28,12 @@
                 <input type="text" class="form-control" id="title" name="title" placeholder="Mr./Mrs./Miss." required>
             </div>
             <div class="form-group">
-                <label class="control-label" for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+                <label class="control-label" for="first_name">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="last_name">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" required>
             </div>
             <div class="form-group">
                 <label class="control-label" for="Address">Address</label>
@@ -41,9 +49,9 @@
             </div>
             <div class="form-group">
                 <label class="control-label" for="phone_no">Phone NO</label>
-                <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="home">
-                <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="mobile" required>
-                <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="emergency" required>
+                <input type="text" class="form-control" id="home_no" name="home_no" placeholder="home">
+                <input type="text" class="form-control" id="mobile_no" name="mobile_no" placeholder="mobile" required>
+                <input type="text" class="form-control" id="emergency_no" name="emergency_no" placeholder="emergency" required>
             </div>
             <div class="form-group">
                 <label class="control-label" for="user_name">User Name</label>
@@ -55,7 +63,8 @@
             </div>
             <div class="form-group">
                 <label class="control-label" for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="only when initially add.">
+                <input type="password" class="form-control" id="password" name="password"
+                       placeholder="only when initially add.">
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" name="Register" value="Register">
