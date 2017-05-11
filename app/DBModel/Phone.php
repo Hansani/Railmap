@@ -24,7 +24,7 @@ class Phone
             $stm = $db->prepare("INSERT INTO phone (person_id,phone_type,phone_no) VALUE (?,?,?)");
             $stm->bind_param("iss", $this->person_id, $this->phone_type, $this->phone_no);
             $execute = $stm->execute();
-
+            echo('add to phone success');
             return $execute;
         }
         return false;

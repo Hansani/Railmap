@@ -11,11 +11,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $this->validate($request, [
-            'user_name' => 'required',
+            'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        $logged_in = Auth::attempt(['user_name' => $request['user_name'], 'password' => $request['password']]);
+        $logged_in = Auth::attempt(['email' => $request['email'], 'password' => $request['password']]);
         if ($logged_in) {
             return view('welcome')->with('message', 'Login Success');
         } else {

@@ -7,9 +7,7 @@
 @section('body_content')
     <div class="form-group">
         <label class="control-label" for="station_code">Station Code</label>
-        <select name="station_code" style="width: 100%" form="add_form">
-            <option></option>
-        </select>
+        <input type="text" class="form-control" id="station_code" name="station_code" form="add_form">
     </div>
     <div class="form-group">
         <label class="control-label" for="name">Name</label>
@@ -21,7 +19,11 @@
     </div>
     <div class="form-group">
         <label class="control-label" for="line_no">Line NO</label>
-        <input type="text" class="form-control" id="line_no" name="line_no" form="add_form">
+        <Select name="line_no" style="width: 100%; height: 100%" form="add_form">
+            @foreach($lines as $line)
+                <Option value="{{$line->line_no}}">{{$line->line_no}}</Option>
+            @endforeach
+        </Select>
     </div>
     <div class="form-group">
         <label class="control-label" for="district">District</label>
@@ -32,7 +34,7 @@
         <input type="text" class="form-control" id="province" name="province" form="add_form">
     </div>
     <div class="form-group">
-        <form role="form" method="get" action="{{url('/station-manager')}}" id="add_form">
+        <form role="form" method="post" action="{{url('/submit-station')}}" id="add_form">
             <input type="submit" class="btn btn-primary" name="Add" value="Add">
             <input type="submit" class="btn btn-primary" name="Update" value="Update">
         </form>
@@ -52,19 +54,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <form role="form" method="get" action="{{url('/station-manager')}}" id="add_form">
-                            <input type="submit" class="btn btn-default" name="Remove" value="Remove">
-                        </form>
-                    </td>
-                </tr>
+                @foreach($stations as $station)
+                    <tr>
+                        <td>{{$station->station_code}}</td>
+                        <td>{{$station->name}}</td>
+                        <td>{{$station->type}}</td>
+                        <td>{{$station->line_no}}</td>
+                        <td>{{$station->district}}</td>
+                        <td>{{$station->province}}</td>
+                        <td>
+                            <form role="form" method="post" action="{{url('/delete-station')}}" id="add_form">
+                                <input type="hidden" id="station_code" name="station_code"
+                                       value="{{$station->station_code}}">
+                                <input type="submit" class="btn btn-default" name="Remove" value="Remove">
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

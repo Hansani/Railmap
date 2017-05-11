@@ -17,7 +17,6 @@ class EmployeeController extends Controller
     {
         $this->validate($request, [
             'person_id' => 'max:6',
-            'employee_id' => 'required|max:6',
             'nic' => 'required|max:20',
             'title' => 'required|max:10',
             'first_name' => 'required|max:30',
@@ -31,13 +30,14 @@ class EmployeeController extends Controller
             'home_no' => 'max:20',
             'mobile_no' => 'required|max:20',
             'emergency_no' => 'required|max:20',
+            'employee_id' => 'required|max:6',
             'user_name' => 'required|max:30',
             'designation' => 'required|max:30',
             'password' => 'max:40'
         ]);
 
         $employee = new Employee();
-        $employee->employee_id = $request['employee_id'];
+        
         $employee->nic = $request['nic'];
         $employee->title = $request['title'];
         $employee->first_name = $request['first_name'];
@@ -48,14 +48,20 @@ class EmployeeController extends Controller
         $employee->province = $request['province'];
         $employee->postal_code = $request['postal_code'];
         $employee->email = $request['email'];
+        
         $employee->home_no = $request['home_no'];
         $employee->mobile_no = $request['mobile_no'];
         $employee->emergency_no = $request['emergency_no'];
+        $employee->employee_id = $request['employee_id'];
         $employee->user_name = $request['user_name'];
+        $employee->designation=$request['designation'];
 
         if (isset($_POST['Register'])) {
+            echo 'start register';
             $employee->password = $request['password'];
-            $employee->insert();
+            if($employee->insert()){
+                return view('administrator.main')->with('message', 'Register Employee Successfully');   
+            }
         }else if (isset($_POST['Edit'])){
             $employee->person_id = $request['person_id'];
             $employee->update();

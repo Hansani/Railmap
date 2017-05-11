@@ -8,8 +8,8 @@
     <div class="row">
         <form action="{{ url('/login') }}" method="post">
             <div class="form-group">
-                <label class="control-label" for="user_name">User Name</label>
-                <input class="form-control" id="user_name" name="user_name" type="text">
+                <label class="control-label" for="email">Email</label>
+                <input class="form-control" id="email" name="email" type="text">
             </div>
 
             <div class="form-group">

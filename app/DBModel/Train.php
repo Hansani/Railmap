@@ -27,8 +27,10 @@ class Train
     {
         $db = DBConnector::getDatabase();
         if (isset($db)) {
-            $stm = $db->prepare("INSERT INTO train (train_no,name,type,source_station,departure_time,destination_station,arrival_time,classes,availability) VALUES (?,?,?,?,?,?,?,?,?)");
-            $stm->bind_param("issssssss", $this->train_no, $this->name, $this->type, $this->source_station, $this->departure_time, $this->destination_station,$this->arrival_time,$this->classes,$this->availability);
+            $stm = $db->prepare("INSERT INTO train (train_no,name,type,source_station,departure_time,destination_station,
+                        arrival_time,classes,availability) VALUES (?,?,?,?,?,?,?,?,?)");
+            $stm->bind_param("issssssss", $this->train_no, $this->name, $this->type, $this->source_station, $this->departure_time, 
+                  $this->destination_station,$this->arrival_time,$this->classes,$this->availability);
             return $stm->execute();
         }
         return false;
@@ -108,8 +110,10 @@ class Train
     {
         $db = DBConnector::getDatabase();
         if (isset($db)) {
-            $stmt = $db->prepare("UPDATE train SET name=?, type=?, source_station=?, departure_time=?, destination_station=?, arrival_time=?, classes=?, availability=? WHERE train_no=?");
-            $stmt->bind_param("ssssssssi", $this->name, $this->type, $this->source_station, $this->departure_time, $this->destination_station, $this->arrival_time, $this->classes, $this->availability);
+            $stmt = $db->prepare("UPDATE train SET name=?, type=?, source_station=?, departure_time=?, destination_station=?, 
+                         arrival_time=?, classes=?, availability=? WHERE train_no=?");
+            $stmt->bind_param("ssssssssi", $this->name, $this->type, $this->source_station, $this->departure_time, 
+                   $this->destination_station, $this->arrival_time, $this->classes, $this->availability);
             return $stmt->execute();
         }
         return false;

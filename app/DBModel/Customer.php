@@ -86,4 +86,34 @@ class Customer extends Person
             return false;
         }
     }
+
+    public static function getAll()
+    {
+        $db = DBConnector::getDatabase();
+        if (isset($db)) {
+            $sql = "SELECT customer.person_id,nic,title,first_name,last_name,street_no,street_name,city,province,postal_code,email,country FROM customer 
+                    LEFT OUTER JOIN person ON customer.person_id=person.person_id";
+            $customers_array = $db->query($sql);
+            $customers = array();
+            while ($customer_details = $customers_array->fetch_assoc()) {
+                $customer = new Customer();
+
+                $customer->person_id = $customer_details['person_id'];
+                $customer->nic = $customer_details['nic'];
+                $customer->title = $customer_details['title'];
+                $customer->first_name = $customer_details['first_name'];
+                $customer->last_name = $customer_details['last_name'];
+                $customer->street_no = $customer_details['street_no'];
+                $customer->street_name = $customer_details['street_name'];
+                $customer->city = $customer_details['city'];
+                $customer->province = $customer_details['province'];
+                $customer->postal_code = $customer_details['postal_code'];
+                $customer->email = $customer_details['email'];
+                $customer->country = $customer_details['country'];
+
+                $customers[$customer_details['person_id']] = $customer;
+            }
+            return $customers;
+        }
+    }
 }

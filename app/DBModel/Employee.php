@@ -20,23 +20,28 @@ class Employee extends Person
     public function insert()
     {
         $db = DBConnector::getDatabase();
+        echo 'connected to database';
         if (isset($db)) {
-            if (!isset($this->person_id)) {
-                mysqli_begin_transaction($db);
-                $person_id = parent::insert();
-                if (isset($person_id)) {
-                    $stm = $db->prepare("INSERT INTO employee (person_id,employee_id,user_name,designation,password) VALUES (?,?,?,?,?) ");
-                    $stm->bind_param("issss", $this->person_id, $this->employee_id, $this->user_name, $this->designation, $this->password);
-                    $executed = $stm->execute();
-                    mysqli_commit($db);
-                    return $executed;
-                }
-            } else {
+//            if (!isset($this->person_id)) {
+//                mysqli_begin_transaction($db);
+//                echo('transaction started');
+//                $person_id = parent::insert();
+//                if (isset($person_id)) {
+//                    $stm = $db->prepare("INSERT INTO employee (person_id,employee_id,user_name,designation,password) VALUES (?,?,?,?,?) ");
+//                    $stm->bind_param("issss", $this->person_id, $this->employee_id, $this->user_name, $this->designation, $this->password);
+//                    $executed = $stm->execute();
+//                    mysqli_commit($db);
+//                    echo('register employee');
+//                    return $executed;
+//                }
+//            } else {
+                $person_id= parent::insert();
                 $stm = $db->prepare("INSERT INTO employee (person_id,employee_id,user_name,designation,password) VALUES (?,?,?,?,?) ");
-                $stm->bind_param("issss", $this->person_id, $this->employee_id, $this->user_name, $this->designation, $this->password);
+                $stm->bind_param("issss", $person_id, $this->employee_id, $this->user_name, $this->designation, $this->password);
                 $executed = $stm->execute();
+                echo(' register employee');
                 return $executed;
-            }
+            //}
         }
         return false;
     }
@@ -119,11 +124,12 @@ class Employee extends Person
         return false;
     }
 
-    public static function getAllEmployee(){
+    public static function getAllEmployee()
+    {
         $db = DBConnector::getDatabase();
         if (isset($db)) {
             $sql = "SELECT * FROM employee";
-            
+
             $result = $db->query($sql);
 
             if (isset($result)) {
@@ -132,7 +138,7 @@ class Employee extends Person
                 while ($row = $result->fetch_assoc()) {
                     $employee = new Employee();
                     $employee->person_id = $row['person_id'];
-                    $employee=Person::getPerson($employee->person_id,$employee);
+                    $employee = Person::getPerson($employee->person_id, $employee);
                     $employees[] = $employee;
                 }
                 return $employees;

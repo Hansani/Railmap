@@ -16,10 +16,6 @@
                 </select>
             </div>
             <div class="form-group">
-                <label class="control-label" for="employee_id">Employee ID </label>
-                <input type="text" class="form-control" id="employee_id" name="employee_id" required>
-            </div>
-            <div class="form-group">
                 <label class="control-label" for="nic">NIC</label>
                 <input type="text" class="form-control" id="nic" name="nic" required>
             </div>
@@ -52,6 +48,10 @@
                 <input type="text" class="form-control" id="home_no" name="home_no" placeholder="home">
                 <input type="text" class="form-control" id="mobile_no" name="mobile_no" placeholder="mobile" required>
                 <input type="text" class="form-control" id="emergency_no" name="emergency_no" placeholder="emergency" required>
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="employee_id">Employee ID </label>
+                <input type="text" class="form-control" id="employee_id" name="employee_id" required>
             </div>
             <div class="form-group">
                 <label class="control-label" for="user_name">User Name</label>

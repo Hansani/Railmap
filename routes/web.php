@@ -63,25 +63,23 @@ Route::get('/employee', function () {
     return view('employee.main');
 });
 
-Route::get('/train-manager', function () {
-    return view('employee.train_manager.main');
+Route::get('/train-manager', 'TrainController@loadTrain');
+Route::post('/submit-train', 'TrainController@submitTrain');
+Route::post('delete-train', 'TrainController@deleteTrain');
+
+Route::get('/station-manager', 'StationController@loadStation');
+Route::post('/submit-station', 'StationController@submitStation');
+Route::post('/delete-station', 'StationController@deleteStation');
+
+Route::get('/reservation-manager', 'ReservationController@loadReservation');
+Route::get('/view-reservation', 'ReservationController@viewReservation');
+Route::get('/accept-reservation', function(){
+    return redirect('/reservation-manager');
 });
 
-Route::get('/station-manager', function () {
-    return view('employee.station_manager.main');
-});
-
-Route::get('reservation-manager', function () {
-    return view('employee.reservation_manager.reservation_requests.main');
-});
-
-Route::get('/view-reservation', function () {
-    return view('employee.reservation_manager.view_reservation.main');
-});
-
-Route::get('/line-details', function () {
-    return view('employee.line_details.main');
-});
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
+Route::get('/line-details', 'LineController@loadLines');
+Route::post('submit-line-details', 'LineController@submitLine');
+Route::post('delete-line-details', 'LineController@deleteLine');
+//Auth::routes();
+//
+//Route::get('/home', 'HomeController@index');

@@ -30,6 +30,17 @@ class Station
         return false;
     }
 
+    public function update()
+    {
+        $db = DBConnector::getDatabase();
+        if (isset($db)) {
+            $stmt = $db->prepare("UPDATE station SET name=?, type=?, line_no=?, district=?, province=? WHERE station_code=?");
+            $stmt->bind_param("ssisss", $this->name, $this->type, $this->line_no, $this->district, $this->province, $this->station_code);
+            return $stmt->execute();
+        }
+        return false;
+    }
+
     public static function getAll()
     {
         $db = DBConnector::getDatabase();
@@ -94,16 +105,6 @@ class Station
         return false;
     }
 
-    public function update()
-    {
-        $db = DBConnector::getDatabase();
-        if (isset($db)) {
-            $stmt = $db->prepare("UPDATE station SET name=?, type=? WHERE station_code=?");
-            $stmt->bind_param("sss", $this->name, $this->type, $this->station_code);
-            return $stmt->execute();
-        }
-        return false;
-    }
 
 
 }

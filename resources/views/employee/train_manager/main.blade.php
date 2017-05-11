@@ -7,9 +7,7 @@
 @section('body_content')
     <div class="form-group">
         <label class="control-label" for="train_no">Train NO</label>
-        <select name="train_no" style="width: 100%" form="add_form">
-                <option></option>
-        </select>
+        <input type="text" class="form-control" id="train_no" name="train_no" form="add_form">
     </div>
     <div class="form-group">
         <label class="control-label" for="name">Name</label>
@@ -20,16 +18,16 @@
         <input type="text" class="form-control" id="type" name="type" form="add_form">
     </div>
     <div class="form-group">
-        <label class="control-label" for="source">Source</label>
-        <input type="text" class="form-control" id="source" name="source" form="add_form">
+        <label class="control-label" for="source_station">Source</label>
+        <input type="text" class="form-control" id="source_station" name="source_station" form="add_form">
     </div>
     <div class="form-group">
         <label class="control-label" for="departure_time">Departure Time</label>
         <input type="text" class="form-control" id="departure_time" name="departure_time" form="add_form">
     </div>
     <div class="form-group">
-        <label class="control-label" for="destination">Destination</label>
-        <input type="text" class="form-control" id="destination" name="destination" form="add_form">
+        <label class="control-label" for="destination_station">Destination</label>
+        <input type="text" class="form-control" id="destination_station" name="destination_station" form="add_form">
     </div>
     <div class="form-group">
         <label class="control-label" for="arrival_time">Arrival Time</label>
@@ -37,14 +35,25 @@
     </div>
     <div class="form-group">
         <label class="control-label" for="classes">Classes</label>
-        <input type="text" class="form-control" id="classes" name="classes" form="add_form">
+        <select name="classes" id="classes" style="width: 100%" form="add_form">
+            <option value="1,2,3">1,2,3</option>
+            <option value="1,2">1,2</option>
+            <option value="2,3">2,3</option>
+        </select>
     </div>
     <div class="form-group">
         <label class="control-label" for="availability">Availability</label>
-        <input type="text" class="form-control" id="availability" name="availability" form="add_form">
+        <select name="availability" id="availability" style="width: 100%" form="add_form" >
+            <option value="Daily">Daily</option>
+            <option value="Monday-Friday">Monday-Friday</option>
+            <option value="Monday-Saturday">Monday-Saturday</option>
+            <option value="Saturday-Sunday">Saturday-Sunday</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
+        </select>
     </div>
     <div class="form-group">
-        <form role="form" method="get" action="{{url('/train-manager')}}" id="add_form">
+        <form role="form" method="post" action="{{url('/submit-train')}}" id="add_form">
             <input type="submit" class="btn btn-primary" name="Add" value="Add">
             <input type="submit" class="btn btn-primary" name="Update" value="Update">
         </form>
@@ -67,22 +76,25 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($trains as $train)
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{$train->train_no}}</td>
+                        <td>{{$train->name}}</td>
+                        <td>{{$train->type}}</td>
+                        <td>{{$train->source_station}}</td>
+                        <td>{{$train->departure_time}}</td>
+                        <td>{{$train->destination_station}}</td>
+                        <td>{{$train->arrival_time}}</td>
+                        <td>{{$train->classes}}</td>
+                        <td>{{$train->availability}}</td>
                         <td>
-                            <form role="form" method="get" action="{{url('/train-manager')}}" id="add_form">
+                            <form role="form" method="post" action="{{url('/delete-train')}}" id="add_form">
+                                <input type="hidden" id="train_no" name="train_no" value="{{$train->train_no}}">
                                 <input type="submit" class="btn btn-default" name="Remove" value="Remove">
                             </form>
                         </td>
                     </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

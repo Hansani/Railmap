@@ -30,17 +30,19 @@
                 </tr>
                 </thead>
                 <tbody>
+                @foreach($lines as $line)
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{$line->line_no}}</td>
+                    <td>{{$line->name}}</td>
+                    <td>{{$line->distance}}</td>
                     <td>
                         <form role="form" method="post" action="{{url('/delete-line-details')}}" id="add_form">
-                            <input type="hidden" id="line_no" name="line_no">
+                            <input type="hidden" id="line_no" name="line_no" value="{{$line->line_no}}">
                             <input type="submit" class="btn btn-default" name="Remove" value="Remove">
                         </form>
                     </td>
                 </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

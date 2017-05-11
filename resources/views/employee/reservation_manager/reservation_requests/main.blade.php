@@ -22,21 +22,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <form method="GET" action="{{url('/reservation-manager')}}">
-                            <button type="submit" class="btn btn-default">View</button>
-                        </form>
-                    </td>
-                </tr>
+                @foreach($reservations as $reservation)
+                    <tr>
+                        <td>{{$reservation->reservation_no}}</td>
+                        <td>{{$customer[$reservation->customer_id]->last_name}}</td>
+                        <td>{{$reservation->train_no}}</td>
+                        <td>{{$reservation->reserve_from}}</td>
+                        <td>{{$reservation->reserve_to}}</td>
+                        <td>{{$reservation->class}}</td>
+                        <td>{{$reservation->reserve_date}}</td>
+                        <td>{{$reservation->no_of_seat}}</td>
+                        <td>
+                            <form method="get" action="{{url('/view-reservation')}}">
+                                <input type="hidden" id="reservation_no" name="reservation_no"
+                                       value="{{$reservation->reservation_no}}">
+                                <button type="submit" class="btn btn-default">View</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
         </div>

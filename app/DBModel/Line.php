@@ -20,7 +20,7 @@ class Line
     {
         $db = DBConnector::getDatabase();
         if (isset($db)) {
-            $stm = $db->prepare("INSERT INTO line (name, distance) VALUES (?,?,)");
+            $stm = $db->prepare("INSERT INTO line (name, distance) VALUES (?,?)");
             $stm->bind_param("sd", $this->name, $this->distance);
             return $stm->execute();
         } else {
@@ -49,11 +49,11 @@ class Line
         return false;
     }
 
-    public function getAll()
+    public static function getAll()
     {
         $db = DBConnector::getDatabase();
         if (isset($db)) {
-            $stm = "SELECT * FROM line_no";
+            $stm = "SELECT * FROM line";
             $result = $db->query($stm);
             if (isset($result)) {
                 $lines = array();

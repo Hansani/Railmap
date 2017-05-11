@@ -52,7 +52,7 @@ class Reservation
                     $reservation->reserve_date = $row['reserve_date'];
                     $reservation->class = $row['class'];
                     $reservation->no_of_seat = $row['no_of_seat'];
-                    $reservations = $reservation;
+                    $reservations[$row['reservation_no']] = $reservation;
                 }
                 return $reservations;
             }
