@@ -66,6 +66,8 @@ Route::get('/employee', function () {
 Route::get('/train-manager', 'TrainController@loadTrain');
 Route::post('/submit-train', 'TrainController@submitTrain');
 Route::post('delete-train', 'TrainController@deleteTrain');
+Route::get('/load-train-station', 'TrainController@loadTrainStation');
+Route::post('/submit-train-station', 'TrainController@trainStation');
 
 Route::get('/station-manager', 'StationController@loadStation');
 Route::post('/submit-station', 'StationController@submitStation');
@@ -73,9 +75,7 @@ Route::post('/delete-station', 'StationController@deleteStation');
 
 Route::get('/reservation-manager', 'ReservationController@loadReservation');
 Route::get('/view-reservation', 'ReservationController@viewReservation');
-Route::get('/accept-reservation', function(){
-    return redirect('/reservation-manager');
-});
+Route::get('/accept-reservation', 'ReservationController@acceptReservation');
 
 Route::get('/line-details', 'LineController@loadLines');
 Route::post('submit-line-details', 'LineController@submitLine');

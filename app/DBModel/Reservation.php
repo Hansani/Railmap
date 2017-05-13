@@ -20,6 +20,7 @@ class Reservation
     public $reserve_date;
     public $class;
     public $no_of_seat;
+    public $accepted;
 
     public function insert()
     {
@@ -52,6 +53,7 @@ class Reservation
                     $reservation->reserve_date = $row['reserve_date'];
                     $reservation->class = $row['class'];
                     $reservation->no_of_seat = $row['no_of_seat'];
+                    $reservation->accepted = $row['accepted'];
                     $reservations[$row['reservation_no']] = $reservation;
                 }
                 return $reservations;
@@ -64,7 +66,7 @@ class Reservation
     {
         $db = DBConnector::getDatabase();
         if (isset($db)) {
-            $stmt = $db->prepare("SELECT * FROM reservation WHERE reservation_no=?");
+            $stmt = $db->prepare("SELECT * FROM reservation WHERE reservation_no=? AND accepted=0");
             $stmt->bind_param("i", $reservation_no);
 
             if ($stmt->execute()) {
@@ -104,8 +106,18 @@ class Reservation
     {
         $db = DBConnector::getDatabase();
         if (isset($db)) {
-            $stmt = $db->prepare("UPDATE reservation SET train_no=?,reserve_from=?, reserve_to=?, reserve_date=?, class=?, no_of_seat=? WHERE train_no=?");
+            $stmt = $db->prepare("UPDATE reservation SET train_no=?,reserve_from=?, reserve_to=?, reserve_date=?, class=?, no_of_seat=? WHERE reservation_no=?");
             $stmt->bind_param("issssi", $this->train_no, $this->reserve_from, $this->reserve_to, $this->reserve_date, $this->class, $this->no_of_seat);
+            return $stmt->execute();
+        }
+        return false;
+    }
+
+    public static function accept($reservation_no){
+        $db = DBConnector::getDatabase();
+        if(isset($db)){
+            $stmt = $db->prepare("UPDATE reservation SET accepted=1 WHERE reservation_no=?");
+            $stmt->bind_param("i", $reservation_no);
             return $stmt->execute();
         }
         return false;

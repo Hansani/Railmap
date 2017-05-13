@@ -36,7 +36,11 @@
                             <form method="get" action="{{url('/view-reservation')}}">
                                 <input type="hidden" id="reservation_no" name="reservation_no"
                                        value="{{$reservation->reservation_no}}">
-                                <button type="submit" class="btn btn-default">View</button>
+                                @if($reservation->accepted == 0)
+                                    <button type="submit" class="btn btn-primary">View</button>
+                                @elseif ($reservation->accepted == 1)
+                                    <button type="submit" class="btn btn-danger">View</button>
+                                @endif
                             </form>
                         </td>
                     </tr>
